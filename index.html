@@ -73,7 +73,7 @@ body {font-family: "Lato", sans-serif}
   <div class="w3-white" id="about">
     <div class="w3-container w3-content w3-padding-64" style="max-width: 1500px">
       <h2 class="w3-wide w3-center"><span class="w3-tag w3-wide">ABOUT ME</span></h2>
-        <p>This page is about me!</p>
+        <p class="w3-wide w3-center">This page is about me!</p>
         <table>
             <tr>
                 <td>
@@ -90,17 +90,17 @@ body {font-family: "Lato", sans-serif}
                 </td>
             </tr>
         </table>
-        <h3>Interests</h3>
-        <p>I am interested in many things and how they work.  My main hobbies are:
+        <h3 class="w3-wide w3-center">Interests</h3>
+        <p class="w3-wide w3-center">I am interested in many things and how they work.  My main hobbies are:
             <ul>
-                <li>Tinkering with Nerf.</li>
-                <li>Gaming.</li>
-                <li>Drumming</li>
+                <p class="w3-wide w3-center">-Tinkering with Nerf
+                <p class="w3-wide w3-center">-Gaming
+                <p class="w3-wide w3-center">-Drumming
                 
             </ul>
          </p>
-         <p>I am also interested in pursuing a career in the SAF.</p>
-         <p>All these skills are self-taught.</p>
+         <p class="w3-wide w3-center">I am also interested in pursuing a career in the SAF but i also want to be in the engineering field. I might end up being both as a combat engineer</p>
+         
         <p></p>
     </section>
   </div>
@@ -216,7 +216,297 @@ body {font-family: "Lato", sans-serif}
   <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="contact">
     <h2 class="w3-wide w3-center"><span class="w3-tag w3-wide">Final Project</span></h2>
     
-    <h1> </h1>
+    <p>For my Final Project, I decided to make a giant volume controller. It is connected to the computer through USB. It has the ability to adjust the media volume of the computer simply by rotating the knob clockwise(to increase volume) or anti-clockwise(to decrease volume). It also has RGB lighting which can be seen through the laser-cut holes.<br>
+
+    <h1>Sketch and Model</h1>
+    <p>I already had a rough idea of how i wanted it to look like since the start.
+      <p class="w3-center"><img src="images/sketch.jfif"  style="width:75%" >
+        <p class="w3-center">I wanted it to be sloped towards the user for a more comfortable experience as the angle makes it easier to control the knob<br>
+          <p class="w3-center">This is the 3D model of the product.
+            <p class="w3-center"><img src="images/Screenshot (64).png"  style="width:75%" >
+              <p class="w3-center">The RGB lighting shines through the laser-cut holes in the form of a volume symbol.
+
+    <h1>Electronics</h1>
+    <p>In order for the volume contoller to work, a rotary encoder have to be used.
+      <p class="w3-center"><img src="images/rotary.jfif"  style="width:50%" >
+        <p class="w3-center">It converts angular position to analog or digital inputs.<br><br>
+
+    <p class="w3-center"> Next is the brains of the project, the Arduino Nano.
+      <p class="w3-center"><img src="images/nano.jpg"  style="width:50%" ><br><br>
+
+    <p class="w3-center"> Neopixels are used to give it its RGB lighting.
+      <p class="w3-center"><img src="images/neo.jfif"  style="width:50%" ><br><br>
+
+    <h1>Laser Cutting</h1>
+    <p>The main body of the volume controller will be laser-cut 5mm thick wood.
+      <p class="w3-center"><img src="images/cutwood.jfif"  style="width:50%" >
+        <p class="w3-center">The pieces came out exactly as i wanted it and it all fits perfectly<br><br>  
+
+    <h1>3D Printing</h1>  
+    <p>The rotating knob of the volume controller will be 3D printed.
+      <p class="w3-center"><img src="images/3dprint2.jfif"  style="width:50%" >
+        <p class="w3-center"><img src="images/3dprint.jfif"  style="width:50%" >
+          <p class="w3-center">The hole in the middle is for the rotary encoder to be inserted into. The rotary encoder was measured to be 6mm in diameter thus i designed the hole to be 6.5mm. The printed knob has a snug fit which was ideal as it meant that it can be easily installed yet tight enough so that the rotary encoder can rotate when the knob is rotated.<br><br>  
+
+    <h1>Wiring and Coding</h1>
+    <p>For wiring, it was as simple as connecting the rotary encoder and neopixels to the correct terminals on the breadboard and on the arduino.
+      <p class="w3-center"><img src="images/wire1.jpeg"  style="width:50%" >
+        <p class="w3-center"><img src="images/wire2.jfif"  style="width:50%" >
+        <p>As for the codes, I took it from Adafruit. For some reason it could not work with the Arduino Nano so i settled with Arduino Uno instead. Luckily, the shell of my volume controller had enough space to fit both the Arduino Uno and the mini breadboard
+          
+          <p>These are the codes used
+          <p>#include"TrinketHidCombo.h"
+                        
+
+                        
+<p>#define"PIN_ENCODER_A 0"
+                        
+
+                        
+<p>#define"PIN_ENCODER_B 2"
+                        
+
+                        
+<p>#define"TRINKET_PINx  PINB"
+                        
+
+                            
+<p>static uint8_t enc_prev_pos = 0;
+<p>static uint8_t enc_flags    = 0;
+ 
+<p>void setup()
+<p>
+ <p> // set pins as input with internal pull-up resistors enabled
+ <p> pinMode(PIN_ENCODER_A, INPUT);
+ <p> pinMode(PIN_ENCODER_B, INPUT);
+ <p> digitalWrite(PIN_ENCODER_A, HIGH);
+ <p> digitalWrite(PIN_ENCODER_B, HIGH);
+ 
+  <p>TrinketHidCombo.begin(); // start the USB device engine and enumerate
+ 
+ <p> // get an initial reading on the encoder pins
+ <p> if (digitalRead(PIN_ENCODER_A) == LOW) {
+ <p>   enc_prev_pos |= (1 << 0);
+ <p> }
+ <p> if (digitalRead(PIN_ENCODER_B) == LOW) {
+  <p>  enc_prev_pos |= (1 << 1);
+ <p> }
+<p>}
+ 
+<p>void loop()
+<p>{
+  <p>int8_t enc_action = 0; // 1 or -1 if moved, sign is direction
+ 
+  <p>// note: for better performance, the code will now use
+ <p> // direct port access techniques
+ <p> // http://www.arduino.cc/en/Reference/PortManipulation
+ <p> uint8_t enc_cur_pos = 0;
+ <p> // read in the encoder state first
+ <p> if (bit_is_clear(TRINKET_PINx, PIN_ENCODER_A)) {
+ <p>   enc_cur_pos |= (1 << 0);
+ <p> }
+ <p> if (bit_is_clear(TRINKET_PINx, PIN_ENCODER_B)) {
+  <p>  enc_cur_pos |= (1 << 1);
+ <p> }
+ 
+ <p> // if any rotation at all
+  <p>if (enc_cur_pos != enc_prev_pos)
+ <p> {
+  <p>  if (enc_prev_pos == 0x00)
+  <p>  {
+   <p>   // this is the first edge
+  <p>    if (enc_cur_pos == 0x01) {
+   <p>     enc_flags |= (1 << 0);
+   <p>   }
+   <p>   else if (enc_cur_pos == 0x02) {
+    <p>    enc_flags |= (1 << 1);
+    <p>  }
+   <p> }
+ 
+   <p> if (enc_cur_pos == 0x03)
+   <p> {
+   <p>   // this is when the encoder is in the middle of a "step"
+    <p>  enc_flags |= (1 << 4);
+    
+                            }
+   <p> else if (enc_cur_pos == 0x00)
+  <p>  {
+   <p>   // this is the final edge
+   <p>   if (enc_prev_pos == 0x02) {
+   <p>     enc_flags |= (1 << 2);
+   <p>   }
+   <p>   else if (enc_prev_pos == 0x01) {
+   <p>     enc_flags |= (1 << 3);
+   <p>   }
+ 
+    <p>  // check the first and last edge
+    <p>  // or maybe one edge is missing, if missing then require the middle state
+    <p>  // this will reject bounces and false movements
+    <p>  if (bit_is_set(enc_flags, 0) && (bit_is_set(enc_flags, 2) || bit_is_set(enc_flags, 4))) {
+      <p>  enc_action = 1;
+     <p> }
+     <p> else if (bit_is_set(enc_flags, 2) && (bit_is_set(enc_flags, 0) || bit_is_set(enc_flags, 4))) {
+     <p>   enc_action = 1;
+     <p> }
+      <p>else if (bit_is_set(enc_flags, 1) && (bit_is_set(enc_flags, 3) || bit_is_set(enc_flags, 4))) {
+      <p>  enc_action = -1;
+     <p> }
+     <p> else if (bit_is_set(enc_flags, 3) && (bit_is_set(enc_flags, 1) || bit_is_set(enc_flags, 4))) {
+      <p>  enc_action = -1;
+     <p> }
+ 
+     <p> enc_flags = 0; // reset for next time
+   <p> }
+ <p> }
+ 
+  <p>enc_prev_pos = enc_cur_pos;
+ 
+  <p>if (enc_action > 0) {
+  <p>  TrinketHidCombo.pressMultimediaKey(MMKEY_VOL_UP);
+ <p> }
+ <p> else if (enc_action < 0) {
+  <p>  TrinketHidCombo.pressMultimediaKey(MMKEY_VOL_DOWN);
+ <p> }
+  <p>else {
+  <p>  TrinketHidCombo.poll(); // do nothing, check if USB needs anything done
+ <p> }
+<p>}
+ <p> #include <Adafruit_NeoPixel.h>
+<p>#ifdef __AVR__
+ <p>#include <avr/power.h> // Required for 16 MHz Adafruit Trinket
+<p>
+<p>// Which pin on the Arduino is connected to the NeoPixels?
+<p>// On a Trinket or Gemma we suggest changing this to 1:
+<p>#define LED_PIN     8
+
+<p>// How many NeoPixels are attached to the Arduino?
+<p>#define LED_COUNT  8
+
+<p>// NeoPixel brightness, 0 (min) to 255 (max)
+<p>#define BRIGHTNESS 255 // Set BRIGHTNESS to about 1/5 (max = 255)
+
+<p>// Declare our NeoPixel strip object:
+<p>// Argument 1 = Number of pixels in NeoPixel strip
+<p>// Argument 2 = Arduino pin number (most are valid)
+<p>//   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
+<p>//   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
+<p>//   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
+
+<p>void setup() {
+ <p> // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
+  <p>// Any other board, you can remove this part (but no harm leaving it):
+<p>#if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
+ <p> clock_prescale_set(clock_div_1);
+<p>#endif
+  <p>// END of Trinket-specific code.
+
+ <p> strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
+  <p>strip.show();            // Turn OFF all pixels ASAP
+  <p>strip.setBrightness(BRIGHTNESS);
+<p>}
+
+<p>void loop() {
+ <p> // Fill along the length of the strip in various colors...
+  <p>colorWipe(strip.Color(255,   0,   0)     , 50); // Red
+<p>  colorWipe(strip.Color(  0, 255,   0)     , 50); // Green
+ <p> colorWipe(strip.Color(  0,   0, 255)     , 50); // Blue
+ <p> colorWipe(strip.Color(  0,   0,   0, 255), 50); // True white (not RGB white)
+
+  <p>whiteOverRainbow(75, 5);
+
+ <p> pulseWhite(5);
+
+ <p> rainbowFade2White(3, 3, 1);
+<p>
+<p>// Fill strip pixels one after another with a color. Strip is NOT cleared
+<p>// first; anything there will be covered pixel by pixel. Pass in color
+<p>// (as a single 'packed' 32-bit value, which you can get by calling
+<p>// strip.Color(red, green, blue) as shown in the loop() function above),
+<p>// and a delay time (in milliseconds) between pixels.
+<p>void colorWipe(uint32_t color, int wait) {
+  <p>for(int i=0; i<strip.numPixels(); i++) { // For each pixel in strip...
+  <p>  strip.setPixelColor(i, color);         //  Set pixel's color (in RAM)
+ <p>   strip.show();                          //  Update strip to match
+  <p>  delay(wait);                           //  Pause for a moment
+ <p> }
+<p>}
+
+<p>void whiteOverRainbow(int whiteSpeed, int whiteLength) {
+
+  <p>if(whiteLength >= strip.numPixels()) whiteLength = strip.numPixels() - 1;
+
+  <p>int      head          = whiteLength - 1;
+ <p> int      tail          = 0;
+ <p> int      loops         = 3;
+ <p> int      loopNum       = 0;
+  <p>uint32_t lastTime      = millis();
+  <p>uint32_t firstPixelHue = 0;
+
+  <p>for(;;) { // Repeat forever (or until a 'break' or 'return')
+   <p> for(int i=0; i<strip.numPixels(); i++) {  // For each pixel in strip...
+    <p>  if(((i >= tail) && (i <= head)) ||      //  If between head & tail...
+     <p>    ((tail > head) && ((i >= tail) || (i <= head)))) {
+     <p>   strip.setPixelColor(i, strip.Color(0, 0, 0, 255)); // Set white
+     <p> } else {                                             // else set rainbow
+     <p>   int pixelHue = firstPixelHue + (i * 65536L / strip.numPixels());
+     <p>   strip.setPixelColor(i, strip.gamma32(strip.ColorHSV(pixelHue)));
+    <p>  }
+  <p>  }
+
+   <p> strip.show(); // Update strip with new contents
+  <p>  // There's no delay here, it just runs full-tilt until the timer and
+   <p> // counter combination below runs out.
+
+   <p> firstPixelHue += 40; // Advance just a little along the color wheel
+
+    <p>if((millis() - lastTime) > whiteSpeed) { // Time to update head/tail?
+     <p> if(++head >= strip.numPixels()) {      // Advance head, wrap around
+     <p>   head = 0;
+     <p>   if(++loopNum >= loops) return;
+     <p> }
+     <p> if(++tail >= strip.numPixels()) {      // Advance tail, wrap around
+    <p>    tail = 0;
+    <p>  }
+    <p>  lastTime = millis();                   // Save time of last movement
+    <p>}
+  <p>}
+<p>}
+
+<p>void pulseWhite(uint8_t wait) {
+ <p> for(int j=0; j<256; j++) { // Ramp up from 0 to 255
+  <p>  // Fill entire strip with white at gamma-corrected brightness level 'j':
+  <p>  strip.fill(strip.Color(0, 0, 0, strip.gamma8(j)));
+  <p>  strip.show();
+  <p>  delay(wait);
+ <p> }
+
+ <p> for(int j=255; j>=0; j--) { // Ramp down from 255 to 0
+   <p> strip.fill(strip.Color(0, 0, 0, strip.gamma8(j)));
+  <p> strip.show();
+   <p> delay(wait);
+<p> }
+<p>
+<p>void rainbowFade2White(int wait, int rainbowLoops, int whiteLoops) {
+ <p> int fadeVal=0, fadeMax=100;
+
+  <p>// Hue of first pixel runs 'rainbowLoops' complete loops through the color
+  <p>// wheel. Color wheel has a range of 65536 but it's OK if we roll over, so
+  <p>// just count from 0 to rainbowLoops*65536, using steps of 256 so we
+  <p>// advance around the wheel at a decent clip.
+ <p>for(uint32_t firstPixelHue = 0; firstPixelHue < rainbowLoops*65536;
+   <p> firstPixelHue += 256) {
+
+  <p> for(int i=0; i<strip.numPixels(); i++) { // For each pixel in strip...
+
+  <p>delay(500); // Pause 1/2 second
+<p>}
+
+
+  
+
+
+
+
 
       </div>
     </div>
